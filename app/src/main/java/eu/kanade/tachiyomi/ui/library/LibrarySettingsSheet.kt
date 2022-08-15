@@ -2,7 +2,6 @@ package eu.kanade.tachiyomi.ui.library
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import com.bluelinelabs.conductor.Router
 import eu.kanade.domain.category.interactor.GetCategories
@@ -137,9 +136,7 @@ class LibrarySettingsSheet(
                 // SY -->
                 sourceManager.getCatalogueSources().let { catalogue ->
                     val size = catalogue.size
-                    Log.d("sources_filter", size.toString())
                     sourceFilters = catalogue.associate {
-                        Log.d("sources_filter", it.id.toString())
                         it.id to Item.TriStateGroup(it.id.toInt(), this)
                     }
                     if (size > 1) list.add(Item.Header(R.string.action_filter_source))
