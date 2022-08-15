@@ -43,6 +43,7 @@ fun LibraryScreen(
     onClickAddToMangaDex: () -> Unit,
     onClickSyncExh: () -> Unit,
     onOpenReader: (LibraryManga) -> Unit,
+    onClickCache: () -> Unit,
     // SY <--
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -85,6 +86,7 @@ fun LibraryScreen(
                         onClickCleanTitles = onClickCleanTitles.takeIf { presenter.showCleanTitles },
                         onClickMigrate = onClickMigrate,
                         onClickAddToMangaDex = onClickAddToMangaDex.takeIf { presenter.showAddToMangadex },
+                        onClickCache = onClickCache,
                         // SY <--
                     )
                 },

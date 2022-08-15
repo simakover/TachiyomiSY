@@ -53,6 +53,8 @@ import eu.kanade.tachiyomi.source.LocalSource
 import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.SourceManager
 import eu.kanade.tachiyomi.source.model.SManga
+import eu.kanade.tachiyomi.source.model.toMangaInfo
+import eu.kanade.tachiyomi.source.model.toSManga
 import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.source.online.all.MergedSource
 import eu.kanade.tachiyomi.ui.base.presenter.BasePresenter
@@ -803,6 +805,23 @@ class LibraryPresenter(
             )
 
             customMangaManager.saveMangaInfo(mangaJson)
+        }
+    }
+
+    fun cacheManga(mangas: List<DbManga>) {
+        launchIO {
+            val mangaToCache = mangas.distinctBy { it.id }
+
+            val toCache = mangaToCache.map {
+                val source = sourceManager.get(it.source)!!
+                val sManga: SManga = source.getMangaDetails(it.toMangaInfo()).toSManga()
+                it.copyFrom(sManga)
+                MangaUpdate(
+                    id = it.id!!,
+                    genre = it.getGenres(),
+                )
+            }
+            updateManga.awaitAll(toCache)
         }
     }
 

@@ -143,6 +143,7 @@ class LibraryController(
                         .show()
                 }
             },
+            onClickCache = ::cacheManga,
             // SY <--
         )
         LaunchedEffect(presenter.selectionMode) {
@@ -317,6 +318,12 @@ class LibraryController(
             it.source in mangaDexSourceIds
         }
         presenter.syncMangaToDex(mangas)
+        presenter.clearSelection()
+    }
+
+    private fun cacheManga() {
+        val mangas = presenter.selection
+        presenter.cacheManga(mangas)
         presenter.clearSelection()
     }
     // SY <--

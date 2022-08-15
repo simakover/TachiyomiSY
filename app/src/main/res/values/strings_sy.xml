@@ -678,6 +678,9 @@
     <string name="mangadex_similar">MangaDex similar</string>
     <string name="community_recommendations">Community recommendations</string>
 
+    <!-- Cache -->
+    <string name="cache_selected">Cache selected manga</string>
+
     <!-- Scanlator filters -->
     <string name="select_scanlators">Scanlator groups to show</string>
 

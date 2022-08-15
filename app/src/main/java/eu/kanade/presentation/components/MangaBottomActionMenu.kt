@@ -218,6 +218,7 @@ fun LibraryBottomActionMenu(
     onClickCleanTitles: (() -> Unit)?,
     onClickMigrate: (() -> Unit)?,
     onClickAddToMangaDex: (() -> Unit)?,
+    onClickCache: (() -> Unit)?,
     // SY <--
 ) {
     AnimatedVisibility(
@@ -244,7 +245,7 @@ fun LibraryBottomActionMenu(
                 }
             }
             // SY -->
-            val showOverflow = onClickCleanTitles != null || onClickAddToMangaDex != null
+            val showOverflow = onClickCleanTitles != null || onClickAddToMangaDex != null || onClickCache != null
             val moveMarkPrev = onDeleteClicked != null && calculateWindowWidthSizeClass() == WindowWidthSizeClass.Compact
             var overFlowOpen by remember { mutableStateOf(false) }
             // SY <--
@@ -333,6 +334,12 @@ fun LibraryBottomActionMenu(
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.mangadex_add_to_follows)) },
                                 onClick = onClickAddToMangaDex,
+                            )
+                        }
+                        if (onClickCache != null) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.cache_selected)) },
+                                onClick = onClickCache,
                             )
                         }
                     }
