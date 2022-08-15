@@ -857,4 +857,6 @@
     <!-- App widget -->
     <string name="appwidget_updates_description">See your recently updated manga</string>
     <string name="appwidget_unavailable_locked">Widget not available when app lock is enabled</string>
+
+    <string name="action_filter_source">Source</string>
 </resources>

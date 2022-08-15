@@ -37,6 +37,8 @@ object PreferenceKeys {
 
     const val filterLewd = "pref_filter_library_lewd"
 
+    const val filterSource = "pref_filter_library_source"
+
     const val librarySortingMode = "library_sorting_mode"
     const val librarySortingDirection = "library_sorting_ascending"
 

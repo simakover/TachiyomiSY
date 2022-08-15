@@ -274,6 +274,9 @@ class LibraryPresenter(
         val isNotAnyLoggedIn = !loggedInServices.values.any()
         // SY -->
         val filterLewd = preferences.filterLewd().get()
+        val inSources = sourceManager.getCatalogueSources().associate {
+            it.id to preferences.filterSources(it.id).get()
+        }
         // SY <--
 
         val filterFnDownloaded: (LibraryItem) -> Boolean = downloaded@{ item ->
@@ -344,6 +347,21 @@ class LibraryPresenter(
             return@lewd if (filterLewd == State.INCLUDE.value) isLewd
             else !isLewd
         }
+
+        val filterFnSource: (LibraryItem) -> Boolean = source@{ item ->
+            val containsExclude = inSources.filterValues { it == State.EXCLUDE.value }
+            val containsInclude = inSources.filterValues { it == State.INCLUDE.value }
+
+            if (!containsExclude.any() && !containsInclude.any()) return@source true
+
+            val include = containsInclude.containsKey(item.manga.source)
+            val exclude = containsExclude.containsKey(item.manga.source)
+
+            if (include && !exclude) return@source true
+            if (!containsInclude.any() && !exclude) return@source true
+
+            return@source false
+        }
         // SY <--
 
         val filterFn: (LibraryItem) -> Boolean = filter@{ item ->
@@ -354,7 +372,8 @@ class LibraryPresenter(
                     !filterFnCompleted(item) ||
                     !filterFnTracking(item) ||
                     // SY -->
-                    !filterFnLewd(item)
+                    !filterFnLewd(item) ||
+                    !filterFnSource(item)
                 // SY <--
                 )
         }
